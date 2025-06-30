@@ -1,0 +1,10 @@
+numpy
+opencv-python
+torch
+hydra-core
+tqdm
+loguru
+Pillow
+scipy
+iopath
+decord
