@@ -8,3 +8,13 @@ Pillow
 scipy
 iopath
 decord
+matplotlib
+tikzplotlib
+
+pip install matplotlib==3.7.1
+pip install tikzplotlib==0.10.1
+pip install numpy==1.24.4
+
+jpeg4py
+lmdb
+pandas
