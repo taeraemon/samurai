@@ -35,6 +35,7 @@ def local_env_settings():
     # settings.youtubevos_dir = ''
 
     settings.lasot_extension_subset_path = '/home/tykim/Documents/dataset/LaSOT-Ext/LaSOT-Extension'
+    settings.lsotb_tir_subset_path = '/home/tykim/Documents/dataset/LSOTB-TIR/LSOTB-TIR-EvaluationData'
     settings.results_path = '/home/tykim/Documents/project_python/paper_tracking/samurai/results'
     settings.result_plot_path = '/home/tykim/Documents/project_python/paper_tracking/samurai/evaluation_results'
     settings.save_dir = '/home/tykim/Documents/project_python/paper_tracking/samurai/evaluation_results'
