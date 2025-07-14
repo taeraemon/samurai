@@ -147,6 +147,8 @@ def plot_draw_save(y, x, scores, trackers, plot_draw_styles, result_plot_path, p
                 color = (1.0, 0.0, 0.0)
             elif trackers[id_sort]['disp_name'] == 'SAMURAI-B':
                 color = (0.0, 0.0, 1.0)
+            else:
+                color = plot_draw_styles[index_sort.numel() - id - 1]['color']  # <-- 추가!
         elif trackers[id_sort]['disp_name'].startswith('SAM2.1'):
             alpha = 0.8
             line_style = '--'
@@ -154,6 +156,8 @@ def plot_draw_save(y, x, scores, trackers, plot_draw_styles, result_plot_path, p
                 color = (1.0, 0.0, 0.0)
             elif trackers[id_sort]['disp_name'] == 'SAM2.1-B':
                 color = (0.0, 0.0, 1.0)
+            else:
+                color = plot_draw_styles[index_sort.numel() - id - 1]['color']  # <-- 추가!
         else:
             alpha = 0.5
             color = plot_draw_styles[index_sort.numel() - id - 1]['color']
