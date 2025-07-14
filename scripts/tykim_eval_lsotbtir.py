@@ -22,7 +22,10 @@ test_videos = sorted([d for d in os.listdir(video_sequence_folder) if osp.isdir(
 
 # 실험 이름과 모델 이름
 exp_name = "samurai_TIR" # 결과 저장 폴더명을 구분하기 위해 TIR 추가
-model_name = "base_plus"
+model_name = "tiny"
+# model_name = "small"
+# model_name = "base_plus"
+# model_name = "large"
 
 # 결과 저장 폴더
 pred_folder = f"results/{exp_name}/{exp_name}_{model_name}"
