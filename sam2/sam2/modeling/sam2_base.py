@@ -415,9 +415,12 @@ class SAM2Base(torch.nn.Module):
             align_corners=False,
         )
 
+        # ================================================================================================================================
         sam_output_token = sam_output_tokens[:, 0]
         kf_ious = None
         if multimask_output and self.samurai_mode:
+            
+            # 그냥 모지리 상태일 때
             if self.kf_mean is None and self.kf_covariance is None or self.stable_frames == 0:
                 best_iou_inds = torch.argmax(ious, dim=-1)
                 batch_inds = torch.arange(B, device=device)
@@ -435,6 +438,8 @@ class SAM2Base(torch.nn.Module):
                     sam_output_token = sam_output_tokens[batch_inds, best_iou_inds]
                 self.frame_cnt += 1
                 self.stable_frames += 1
+            
+            # 안정된 프레임이 부족할 때
             elif self.stable_frames < self.stable_frames_threshold:
                 self.kf_mean, self.kf_covariance = self.kf.predict(self.kf_mean, self.kf_covariance)
                 best_iou_inds = torch.argmax(ious, dim=-1)
@@ -456,6 +461,8 @@ class SAM2Base(torch.nn.Module):
                 if sam_output_tokens.size(1) > 1:
                     sam_output_token = sam_output_tokens[batch_inds, best_iou_inds]
                 self.frame_cnt += 1
+            
+            # 멀쩡할 때
             else:
                 self.kf_mean, self.kf_covariance = self.kf.predict(self.kf_mean, self.kf_covariance)
                 high_res_multibboxes = []
@@ -479,6 +486,7 @@ class SAM2Base(torch.nn.Module):
                 if sam_output_tokens.size(1) > 1:
                     sam_output_token = sam_output_tokens[batch_inds, best_iou_inds]
 
+                # 어차피 동작 안하는듯? 코드 의도 모르겠음
                 if False:
                     # make all these on cpu                        
                     self.history[self.frame_cnt] = {
@@ -496,6 +504,10 @@ class SAM2Base(torch.nn.Module):
                     self.stable_frames = 0
                 else:
                     self.kf_mean, self.kf_covariance = self.kf.update(self.kf_mean, self.kf_covariance, self.kf.xyxy_to_xyah(high_res_multibboxes[best_iou_inds]))
+        # ================================================================================================================================
+        
+        
+        
         elif multimask_output and not self.samurai_mode:
             # take the best mask prediction (with the highest IoU estimation)
             best_iou_inds = torch.argmax(ious, dim=-1)
